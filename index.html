@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Instructions</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 40px; }
+    button { padding: 12px 24px; font-size: 18px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Welcome to the Quiz</h1>
+  <p>Read the instructions carefully. Switching tabs or exiting fullscreen will end your quiz.</p>
+
+  <button onclick="startQuiz()">Start Quiz</button>
+
+  <script>
+    function enterFullscreen() {
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) return elem.requestFullscreen();
+      if (elem.webkitRequestFullscreen) return elem.webkitRequestFullscreen(); // Safari
+      if (elem.msRequestFullscreen) return elem.msRequestFullscreen();         // IE
+      return Promise.reject("Fullscreen not supported");
+    }
+
+    function startQuiz() {
+      enterFullscreen().catch(() => {
+        alert("Fullscreen not supported on this device. The quiz will run in normal mode.");
+      }).finally(() => {
+        window.location.href = "quiz.html";
+      });
+    }
+  </script>
+</body>
+</html>

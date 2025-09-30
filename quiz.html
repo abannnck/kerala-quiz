@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 30px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <h1>Quiz Started</h1>
+  <form id="quizForm" onsubmit="submitQuiz(event)">
+    <label>Q1: 2 + 2 = ?</label><br>
+    <input type="radio" name="q1" value="3">3
+    <input type="radio" name="q1" value="4">4
+    <input type="radio" name="q1" value="5">5
+    <br><br>
+    <button type="submit">Submit Quiz</button>
+  </form>
+
+  <script>
+    let malpracticeDetected = false;
+
+    // Detect leaving page/tab
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        malpracticeDetected = true;
+        alert("Malpractice detected! Quiz ended.");
+        window.location.href = "result.html?malpractice=1";
+      }
+    });
+
+    // Detect exiting fullscreen
+    document.addEventListener("fullscreenchange", () => {
+      if (!document.fullscreenElement) {
+        malpracticeDetected = true;
+        alert("Fullscreen exit detected! Quiz ended.");
+        window.location.href = "result.html?malpractice=1";
+      }
+    });
+
+    function submitQuiz(e) {
+      e.preventDefault();
+      if (!malpracticeDetected) {
+        // Save result only if no malpractice
+        window.location.href = "result.html?score=1";
+      }
+    }
+  </script>
+</body>
+</html>
